@@ -1,7 +1,7 @@
 DeterministicPhenoGraph for Python3
 ======================
 
-This is a deterministic implementation of PhenoGraph. You can now provide a **seed** to the Louvain-function to ensure the exact same results. The PhenoGraph code was largely adopted from ["tfmodisco"](https://github.com/kundajelab/tfmodisco/))
+This is a deterministic implementation of PhenoGraph. You can now provide a **seed** to the Louvain-function to ensure the exact same results. The PhenoGraph code was largely adopted from ["tfmodisco"](https://github.com/kundajelab/tfmodisco/)
 
 [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) is a clustering method designed for high-dimensional single-cell data. It works by creating a graph ("network") representing phenotypic similarities between cells and then identifying communities in this graph.
 
