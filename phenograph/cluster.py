@@ -35,7 +35,7 @@ def sort_by_size(clusters, min_size):
 def cluster(data, 
             k=30, directed=False, prune=False, min_cluster_size=10, jaccard=True,
             primary_metric='euclidean', n_jobs=-1, q_tol=1e-3, louvain_time_limit=2000,
-            nn_method='kdtree'):
+            nn_method='kdtree', seed=1234):
     """
     PhenoGraph clustering
     :param data: Numpy ndarray of data to cluster, or sparse matrix of k-nearest neighbor graph
@@ -60,6 +60,7 @@ def cluster(data,
         the best result so far is returned
     :param nn_method: Whether to use brute force or kdtree for nearest neighbor search. For very large high-dimensional
         data sets, brute force (with parallel computation) performs faster than kdtree.
+    :param seed: Set seed for stochastic Louvain method, so the results can be replicated
     :return communities: numpy integer array of community assignments for each row in data
     :return graph: numpy sparse array of the graph that was used for clustering
     :return Q: the modularity score for communities on graph
@@ -115,7 +116,7 @@ def cluster(data,
         graph = sp.tril(sg, -1)
     return runlouvain_given_graph(graph, level_to_return=-1,
             q_tol=q_tol, louvain_time_limit=louvain_time_limit,
-            min_cluster_size=min_cluster_size, tic=tic)
+            min_cluster_size=min_cluster_size, tic=tic, seed=seed)
 
 
 def runlouvain_given_graph(graph, level_to_return, q_tol, louvain_time_limit,

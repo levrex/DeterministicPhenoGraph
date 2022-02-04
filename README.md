@@ -1,22 +1,22 @@
 DeterministicPhenoGraph for Python3
 ======================
 
-This is a deterministic implementation of PhenoGraph. It uses a consistent **seed** for the Louvain to ensure the results can be replicated. The PhenoGraph code was largely adopted from ["tfmodisco"](https://github.com/kundajelab/tfmodisco/))
+This is a deterministic implementation of PhenoGraph. You can now provide a **seed** to the Louvain-function to ensure the exact same results. The PhenoGraph code was largely adopted from ["tfmodisco"](https://github.com/kundajelab/tfmodisco/))
 
 [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) is a clustering method designed for high-dimensional single-cell data. It works by creating a graph ("network") representing phenotypic similarities between cells and then identifying communities in this graph.
 
 This software package includes compiled binaries that run community detection based on C++ code written by E. Lefebvre and J.-L. Guillaume in 2008 (["Louvain method"](https://sites.google.com/site/findcommunities/)). The code has been altered to interface more efficiently with the Python code here. It should work on reasonably current Linux, Mac and Windows machines. 
 
 
-To run basic clustering:
+To run basic clustering (default seed=1234) :
 
     from phenograph.cluster import cluster
     communities, graph, Q = cluster(data)
 
-Another example:
+Another example where we change the parameters:
 
     from phenograph.cluster import cluster
-    communities, graph, Q = cluster(data, k=20, primary_metric='minkowski', n_jobs= 1)
+    communities, graph, Q = cluster(data, k=20, primary_metric='minkowski', seed=20220204, n_jobs= 1)
 
 For a dataset of *N* rows, `communities` will be a length *N* vector of integers specifying a community assignment for each row in the data. Any rows assigned `-1` were identified as *outliers* and should not be considered as a member of any community. `graph` is a *N* x *N* `scipy.sparse` matrix representing the weighted graph used for community detection.
 `Q` is the modularity score for `communities` as applied to `graph`.
@@ -25,7 +25,6 @@ Disclaimer
 -------------
 - The leiden algorithm is not implemented in this version. 
 - Multiprocessing doesn't work at the moment
-- I want to add the possibility to change the seed as a user
 
 Citation
 -------------
