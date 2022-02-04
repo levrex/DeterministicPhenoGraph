@@ -13,7 +13,7 @@ To run basic clustering (default seed=1234) :
     from phenograph.cluster import cluster
     communities, graph, Q = cluster(data)
 
-Another example where we change the parameters:
+Another example where we change the seed:
 
     from phenograph.cluster import cluster
     communities, graph, Q = cluster(data, k=20, primary_metric='minkowski', seed=20220204, n_jobs= 1)
