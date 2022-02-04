@@ -1,11 +1,13 @@
+#copied from
+#https://github.com/jacoblevine/PhenoGraph/blob/master/phenograph/bruteforce_nn.py
 """
 Compute k-nearest neighbors using brute force search in parallel
 via scipy.spatial.distance.cdist and multiprocessing.Pool
-
 psutil is used to evaluate available memory and minimize the number
 of parallel jobs for the available resources
 """
-
+from __future__ import print_function
+from __future__ import absolute_import
 import numpy as np
 from scipy.spatial.distance import cdist
 from multiprocessing import Pool
@@ -15,8 +17,8 @@ import psutil
 
 
 def process_chunk(chunk, data, k, metric):
-    d = cdist(chunk, data, metric=metric).astype("float32")
-    p = np.argpartition(d, k).astype("int32")[:, :k]
+    d = cdist(chunk, data, metric=metric).astype('float32')
+    p = np.argpartition(d, k).astype('int32')[:, :k]
     rows = np.arange(chunk.shape[0])[:, None]
     d = d[rows, p]
     i = np.argsort(d)
@@ -46,7 +48,6 @@ def determine_n_chunks(n, k):
 
 def knnsearch(data, k, metric):
     """k-nearest neighbor search via parallelized brute force
-
     Parameters
     ----------
     data : ndarray
@@ -55,21 +56,19 @@ def knnsearch(data, k, metric):
         number of neighbors (including self)
     metric : str
         see cdist documentation http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html
-
     Returns
     -------
     d : ndarray
         distances to k nearest neighbors
     idx : ndarray
         indices of k nearest neighbors
-
     Notes
     -----
     This implementation uses np.array_split to pass the data to subprocesses. This uses views and does not copy the data
     in the subprocesses
     """
 
-    f = partial(process_chunk, **{"data": data, "k": k, "metric": metric})
+    f = partial(process_chunk, **{'data': data, 'k': k, 'metric': metric})
 
     n_chunks = determine_n_chunks(len(data), k)
 
